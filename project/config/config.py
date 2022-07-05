@@ -1,0 +1,15 @@
+class docker_config():
+	CACHE_TYPE = "RedisCache"
+	CACHE_REDIS_HOST = "redis"
+	CACHE_REDIS_PORT = "6379"
+	CACHE_REDIS_DB = "0"
+	CACHE_DEFAULT_TIMEOUT = "500"
+	CACHE_REDIS_URL= "redis://redis:6379/0"
+ 
+class local_config():
+	CACHE_TYPE = "RedisCache"
+	CACHE_REDIS_HOST = "127.0.0.1"
+	CACHE_REDIS_PORT = "6379"
+	CACHE_REDIS_DB = "0"
+	CACHE_DEFAULT_TIMEOUT = "500"
+	CACHE_REDIS_URL= "redis://127.0.0.1:6379/0"

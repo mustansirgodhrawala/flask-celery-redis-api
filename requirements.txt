@@ -1,0 +1,6 @@
+feedparser
+celery
+flask
+flask_caching
+redis
+requests

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+
+  web:
+    build: .
+    image: web
+    container_name: web
+    ports:
+      - 5000:5000
+    command: python manage.py run -h 0.0.0.0
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_DEBUG=1
+      - APP_SETTINGS=project.config.config.docker_config
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+    command: celery --app project.server.tasks.crawler worker --loglevel=info
+    volumes:
+      - .:/app
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+
+  redis:
+    image: redis:6-alpine
