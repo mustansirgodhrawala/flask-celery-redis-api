@@ -27,24 +27,23 @@ There was a mention of timestamps in the task, hence in the response we're retur
 
 1. Use the docker sdk to make the application self sufficient when running locally. Spinning up the redis and celery queue automatically using multiprocessing or subprocess.
 2. Implement logging and discovery operations on which user agents work for the nasdaq website.
-3. Better documentation and factory file structure for the application alongside cleaner more modular config files.
-4. Design a better data structure in json to return values across endpoints.
+3. Design a better data structure in json to return values across endpoints.
 
 ### Deployment
 1. Docker compose can automate the process if necessary so that a celery worker doesn't have to be started.
 ```bash
 # Docker will build the application and auto-start it running it in -d mode would be more cleaner.
-docker-compose up
+docker-compose up --build
 ```
 
 2. You can also use the package manually by starting a redis container and a celery worker, necessary commands are listed here
 ```bash
 # Starting docker container for redis -->
-docker run -p 6379:6379 redis
+docker run -p 6379:6379 -d redis
 # Starting celery worker for async
-celery -A crawler worker --loglevel=info
-# This command will install the application using pip, the console command for the same is dendrite.
-pip3 install -e .
-# Dendrite will access the main function.
-dendrite
+celery -A project.server.tasks.crawler worker --loglevel=info
+# This command will install the application dependencies using pip.
+pip install -r requirements.txt
+# Start flask server
+python manage.py run -h 0.0.0.0 # Bind to all interfaces.
 ```
