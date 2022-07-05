@@ -4,8 +4,8 @@ import time
 from project.server.tasks.crawler import crawler_func
 from flask import jsonify
 	
-@api_blueprint.route("/news/<ticker>", methods=["GET"])
-@api_blueprint.route("/news", methods=["GET"])
+@api_blueprint.route("/api/news/<ticker>", methods=["GET"])
+@api_blueprint.route("/api/news", methods=["GET"])
 @cache.cached(timeout=180, query_string=True)
 def news(ticker=None):
 	if not ticker:
